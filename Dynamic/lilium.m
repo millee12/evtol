@@ -2,6 +2,10 @@ function [whpm,range,packmission,peakp] = lilium(mile,numPax,AeroProps,MissionPr
 % addpath('/Users/ssripad/Box Sync/Projects/Electric Aircarft/PNAS_BR/Model') 
 
 %% Initialize lilium
+C = csv2cell("../Static/lilium_param.csv");
+AeroProps = cell2struct(C(2:end,:)', C(1,:));
+C = csv2cell("../Static/lilium_mission.csv");
+MissionProps = cell2struct(C(2:end,:)', C(1,:));
 % AeroProps           = readtable('lilium_param.csv');
 AeroProps.K         = 1./(4.*AeroProps.cd0.*AeroProps.LD.^2);
 

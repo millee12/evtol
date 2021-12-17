@@ -1,7 +1,7 @@
 clear 
 close all
 
-load('/Users/ssripad/Box Sync/Projects/Electric Aircarft/PNAS_BR/zla_colors.mat')
+% load('/Users/ssripad/Box Sync/Projects/Electric Aircarft/PNAS_BR/zla_colors.mat')
 
 %% Set-up the distance landscape
 distance = linspace(1,284,284);

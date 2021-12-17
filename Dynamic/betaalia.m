@@ -1,7 +1,13 @@
-function [whpm,range,packmission,peakp] = betaalia(mile,numPax,AeroProps,MissionProps)
-% addpath('/Users/ssripad/Box Sync/Projects/Electric Aircarft/PNAS_BR/Model') 
+function [whpm,range,packmission,peakp] = betaalia(mile,numPax)
+% addpath("../Static/") 
 
 %% Initialize betaalia
+C = csv2cell("../Static/betaalia_param.csv");
+AeroProps = cell2struct(C(2:end,:)', C(1,:));
+%% Initialize betaalia
+C = csv2cell("../Static/betaalia_mission.csv");
+MissionProps = cell2struct(C(2:end,:)', C(1,:));
+
 % AeroProps           = readtable('betaalia_param.csv');
 AeroProps.K         = 1./(4.*AeroProps.cd0.*AeroProps.LD.^2);
 
@@ -20,6 +26,7 @@ AtmosPropsGood      = atm(1);
 
 %% Run the model
 [Mission,~,~]       = BasicMission(AeroProps, MissionProps, AtmosPropsGood);
+Mission
 % [Reserve,~,~]       = ReserveMission(AeroProps, MissionProps, AtmosPropsGood);
 
 %% Overall performance

@@ -15,7 +15,8 @@ Temp        =   nan(2*L, n);
 SoS         =   nan(2*L, n);
 Press       =   nan(2*L, n);
 Dens        =   nan(2*L, n);
-Type        =   strings(2*L, 1);
+% Type        =   ''*ones(2*L, 1);
+% Type  = cell(2*L)
 
 tprev       =   zeros(1,n);
 Eprev       =   zeros(1,n);
@@ -34,7 +35,8 @@ for i = 1:L
     SoS(start,:)        =   x{i}.startSoS;
     Press(start,:)      =   x{i}.startPress;
     Dens(start,:)       =   x{i}.startDens;
-    Type(start)         =   strcat(x{i}.type, ' start');
+    % Type{start}         = x{i}.type;
+    % Type(start)         =   strcat(x{i}.type, ' start');
     
     alt(ending,:)      	=   x{i}.endAlt;
     airspeed(ending,:)	=   x{i}.endVelocity;
@@ -43,7 +45,8 @@ for i = 1:L
     SoS(ending,:)       =   x{i}.endSoS;
     Press(ending,:)     =   x{i}.endPress;
     Dens(ending,:)      =   x{i}.endDens;
-    Type(ending)         =   strcat(x{i}.type, ' end');
+    % Type(ending)        =   strcat(x{i}.type, ' end');
+    % Type(ending)        =   x{i}.type;
     
     tspan(ending,:)     =   tspan(start,:) + x{i}.time;
     energy(ending,:)   	=   energy(start,:)+ x{i}.energy;
@@ -52,9 +55,20 @@ for i = 1:L
     Eprev               =   energy(ending,:);
     rprev               =   range(ending,:);
 end
-varNames        =   {'Segment', 'Times', 'PowerkW', 'EnergykWh', 'Rangem', ...
-                    'Altitudem', 'Airspeedmps', 'TemperatureK', 'SpeedOfSoundmps',...
-                    'PressurePa', 'Densitykgpm3'};
-FlightOutput	=   table(Type, tspan, power, energy, range, alt, airspeed, Temp, SoS, Press, Dens, ...
-                    'VariableNames',varNames);
+% varNames        =   {'Segment', 'Times', 'PowerkW', 'EnergykWh', 'Rangem', ...
+%                     'Altitudem', 'Airspeedmps', 'TemperatureK', 'SpeedOfSoundmps',...
+%                     'PressurePa', 'Densitykgpm3'};
+% FlightOutput	=   table(Type, tspan, power, energy, range, alt, airspeed, Temp, SoS, Press, Dens, ...
+%                     'VariableNames',varNames);
+FlightOutput = struct(
+                 "Times",tspan,
+                 "PowerkW", power,
+                 "EnergykWh", energy,
+                 "Rangem", range,
+                 "Altitudem", alt,
+                 "Airspeedmps", airspeed,
+                 "TemperatureK", Temp,
+                 "SpeedOfSoundmps", SoS,
+                 "PressurePa",Press,
+                 "Densitykgpm3",Dens);
 end
